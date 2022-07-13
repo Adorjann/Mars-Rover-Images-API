@@ -2,10 +2,14 @@ package com.adorjanpraksa.web.dto;
 
 import com.adorjanpraksa.validations.RoverAndCameraValidation;
 
+import javax.validation.constraints.NotBlank;
+
 @RoverAndCameraValidation
 public class ImagesRequestParam {
 
+    @NotBlank
     private String rover;
+    @NotBlank
     private String camera;
 
     public ImagesRequestParam() {

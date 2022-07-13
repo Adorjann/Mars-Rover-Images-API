@@ -3,7 +3,6 @@ package com.adorjanpraksa.service;
 import com.adorjanpraksa.configuration.NasaConfiguration;
 import com.adorjanpraksa.model.DailyImages;
 import com.adorjanpraksa.service.dao.NasaDao;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

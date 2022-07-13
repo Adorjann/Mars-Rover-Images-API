@@ -1,6 +1,5 @@
 package com.adorjanpraksa.web.controller;
 
-import com.adorjanpraksa.exception.BadRequestException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +17,6 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 @ResponseBody
 public class GlobalExceptionHandler {
-
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<?> handleBadRequestException(BadRequestException exception) {
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorResponse(exception.getMessage(), HttpStatus.BAD_REQUEST, exception.getMessage()));
-    }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException exception) {

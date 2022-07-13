@@ -8,6 +8,8 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Objects.isNull;
+
 public class RoverAndCameraValidator implements ConstraintValidator<RoverAndCameraValidation, ImagesRequestParam> {
 
     @Value("#{${nasa.roverCameraSupport}}")
@@ -20,11 +22,16 @@ public class RoverAndCameraValidator implements ConstraintValidator<RoverAndCame
     @Override
     public boolean isValid(ImagesRequestParam requestParam, ConstraintValidatorContext context) {
 
+        if (isNull(requestParam.getCamera()) || "".equals(requestParam.getCamera()) ||
+                isNull(requestParam.getRover()) || "".equals(requestParam.getRover())) {
+            return true;
+        }
+
         var rover = requestParam.getRover().toLowerCase();
         var camera = requestParam.getCamera().toUpperCase();
 
-        var roversCameras =roverCameraSupport.get(rover);
-        if (roversCameras == null){
+        var roversCameras = roverCameraSupport.get(rover);
+        if (roversCameras == null) {
             errorMessage = "Rover you have chosen is not supported.";
             property = "rover";
 
