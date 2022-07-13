@@ -18,22 +18,6 @@ import java.util.stream.Collectors;
 @ResponseBody
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException exception) {
-
-        var msg = exception.getMessage().split(":")[1];
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorResponse(msg, HttpStatus.BAD_REQUEST, msg));
-    }
-
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorResponse(BindExceptionErrorMessage(exception), HttpStatus.BAD_REQUEST, "Data validation failed"));
-    }
 
     private Map<String, String> BindExceptionErrorMessage(BindException exception) {
 

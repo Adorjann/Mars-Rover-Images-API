@@ -2,13 +2,13 @@ package com.adorjanpraksa.validations;
 
 import com.adorjanpraksa.web.dto.ImagesRequestParam;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Objects.isNull;
 
 public class RoverAndCameraValidator implements ConstraintValidator<RoverAndCameraValidation, ImagesRequestParam> {
 
@@ -22,16 +22,15 @@ public class RoverAndCameraValidator implements ConstraintValidator<RoverAndCame
     @Override
     public boolean isValid(ImagesRequestParam requestParam, ConstraintValidatorContext context) {
 
-        if (isNull(requestParam.getCamera()) || "".equals(requestParam.getCamera()) ||
-                isNull(requestParam.getRover()) || "".equals(requestParam.getRover())) {
+        if (!StringUtils.hasText(requestParam.getCamera()) || !StringUtils.hasText(requestParam.getRover())) {
             return true;
         }
+
 
         var rover = requestParam.getRover().toLowerCase();
         var camera = requestParam.getCamera().toUpperCase();
 
-        var roversCameras = roverCameraSupport.get(rover);
-        if (roversCameras == null) {
+        if (!roverCameraSupport.containsKey(rover)) {
             errorMessage = "Rover you have chosen is not supported.";
             property = "rover";
 
@@ -43,7 +42,7 @@ public class RoverAndCameraValidator implements ConstraintValidator<RoverAndCame
         property = "camera";
         setConstraintViolation(context);
 
-        return roversCameras.contains(camera);
+        return roverCameraSupport.get(rover).contains(camera);
     }
 
     private void setConstraintViolation(ConstraintValidatorContext context) {

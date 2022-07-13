@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "nasaFeignClient", url = "${nasa.baseUrl}")
 public interface NasaClient {
 
+
+
     @GetMapping(value = "/rovers/{rover}/photos?api_key=${nasa.key}")
     Photos getPhotos(@PathVariable("rover") String rover,
                      @RequestParam("earth_date") String date,

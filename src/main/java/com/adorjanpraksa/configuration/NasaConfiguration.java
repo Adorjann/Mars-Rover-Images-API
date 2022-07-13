@@ -5,16 +5,17 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Configuration;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Configuration
 @ConfigurationProperties(prefix = "nasa")
 @ConfigurationPropertiesScan
 public class NasaConfiguration {
 
-    @NotBlank
-    private int numberOfDays;
-    @NotBlank
-    private int numberOfImages;
+    @NotNull
+    private Integer numberOfDays;
+    @NotNull
+    private Integer numberOfImages;
     @NotBlank
     private String key;
     @NotBlank

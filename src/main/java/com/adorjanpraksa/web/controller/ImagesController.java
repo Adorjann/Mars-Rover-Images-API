@@ -27,7 +27,7 @@ public class ImagesController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<String,List<String>>>getImages(@Valid ImagesRequestParam imagesRequestParam) {
+    public ResponseEntity<Map<String, List<String>>> getImages(@Valid ImagesRequestParam imagesRequestParam) {
 
         var images = imageService.getImages(imagesRequestParam.getRover(), imagesRequestParam.getCamera());
 

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DailyImages {
+public class DailyImages implements Comparable<DailyImages> {
 
     private LocalDate date;
 
@@ -33,5 +33,13 @@ public class DailyImages {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    @Override
+    public int compareTo(DailyImages other) {
+        if (this.getDate().isBefore(other.getDate())) {
+            return 1;
+        }
+        return -1;
     }
 }
