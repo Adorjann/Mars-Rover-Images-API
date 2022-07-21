@@ -26,7 +26,6 @@ public class RoverAndCameraValidator implements ConstraintValidator<RoverAndCame
             return true;
         }
 
-
         var rover = requestParam.getRover().toLowerCase();
         var camera = requestParam.getCamera().toUpperCase();
 

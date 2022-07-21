@@ -6,9 +6,8 @@ import com.adorjanpraksa.service.dao.NasaDao;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class ImageService {
@@ -22,24 +21,12 @@ public class ImageService {
 
     public List<DailyImages> getImages(String rover, String camera) {
 
-        var requestedDailyImages = new ArrayList<DailyImages>();
-
-        for (var currentDate = LocalDate.now();
-             currentDate.isAfter(LocalDate.now().minusDays(nasaConfiguration.getNumberOfDays()));
-             currentDate = currentDate.minusDays(1)) {
-
-            var images = nasaDao.getDailyImages(currentDate, rover, camera).stream()
-                    .limit(nasaConfiguration.getNumberOfImages())
-                    .toList();
-
-            DailyImages dailyImages = new DailyImages(currentDate, images);
-
-            requestedDailyImages.add(dailyImages);
-        }
-
-        return requestedDailyImages.stream()
-                .sorted().toList();
+        return Stream.iterate(LocalDate.now(), date -> date.minusDays(1))
+                .limit(nasaConfiguration.getNumberOfDays())
+                .map(date -> new DailyImages(date, nasaDao.getDailyImages(date, rover, camera).stream()
+                        .limit(nasaConfiguration.getNumberOfImages())
+                        .toList()
+                ))
+                .toList();
     }
-
-
 }

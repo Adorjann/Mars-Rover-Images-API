@@ -5,12 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.ConstraintViolationException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -44,40 +42,6 @@ public class GlobalExceptionHandler {
     }
 
 
-    public static class ErrorResponse<T> {
-
-        private T data;
-        private HttpStatus status;
-        private String message;
-
-        public ErrorResponse(T data, HttpStatus status, String message) {
-            this.data = data;
-            this.status = status;
-            this.message = message;
-        }
-
-        public T getData() {
-            return data;
-        }
-
-        public void setData(T data) {
-            this.data = data;
-        }
-
-        public HttpStatus getStatus() {
-            return status;
-        }
-
-        public void setStatus(HttpStatus status) {
-            this.status = status;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
+    public record ErrorResponse<T>(T data, HttpStatus status, String message) {
     }
 }

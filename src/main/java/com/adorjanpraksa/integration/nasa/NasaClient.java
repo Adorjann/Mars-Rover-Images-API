@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface NasaClient {
 
 
-
-    @GetMapping(value = "/rovers/{rover}/photos?api_key=${nasa.key}")
+    @GetMapping(value = "/rovers/{rover}/photos?api_key=${nasa.api-key}")
     Photos getPhotos(@PathVariable("rover") String rover,
                      @RequestParam("earth_date") String date,
                      @RequestParam("camera") String camera);
